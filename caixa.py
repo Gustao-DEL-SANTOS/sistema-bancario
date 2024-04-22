@@ -49,6 +49,6 @@ while True:
                 saldo -= saque
                 print(f'Seu saque foi de {saque:.2f}')
                 LIMITE_SAQUE_DIARIO -=1
-                extrato += f'Valor sacado R$ {saque} \n'2
+                extrato += f'Valor sacado R$ {saque} \n'
     elif menu == 4:
         break
