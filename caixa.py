@@ -29,12 +29,13 @@ while True:
 
     if menu == 1:
         deposito = float(input('Deposito:  '))
-        if deposito <= 0:
-            print('Valor digitado incorreto. Tente depositar novamente...')
-        else:
+        if deposito > 0:
             saldo += deposito
             extrato += f'Valor depositado {deposito} \n'
             print(f'Seu saldo atual e de R$ {saldo:.2f}')
+            
+        else:
+            print('Valor digitado incorreto. Tente depositar novamente...')
     elif menu == 2:
         print(f'Saldo atual e de R$ {extrato:.2f}')
     elif menu == 3:
