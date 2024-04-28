@@ -1,3 +1,4 @@
+
 def deposito(valor, saldo, extrato, /):
     if valor > 0:
         saldo += valor
@@ -46,50 +47,71 @@ def func_extrato(saldo, /, *, extrato):
 
 
 
-def cadastrar_user():
-    pass
-    
-def cadastrar_conta():
-    pass
-    
-
-
-    
-
-menu = """
-
-[d] Depositar
-[s] Sacar
-[e] Extrato
-[q] Sair
-
-=> """
-
-saldo = 50
-limite = 500
-extrato = ""
-numero_saques = 0
-LIMITE_SAQUES = 3
-
-while True:
-
-    opcao = input(menu)
-
-    if opcao == "d":
-        valor = float(input("Informe o valor do depósito: "))
-
-        saldo, extrato = deposito(valor, saldo, extrato)
-
-    elif opcao == "s":
-        valor = float(input("Informe o valor do saque: "))
-
-        saldo, extrato, numero_saques = saque(valor=valor, saldo=saldo, extrato=extrato, numero_saques=numero_saques, limite=limite, LIMITE_SAQUES=LIMITE_SAQUES)
-        
-    elif opcao == "e":
-        func_extrato(saldo, extrato=extrato)
-
-    elif opcao == "q":
-        break
-
+def criar_usuario(*cadastros):
+    cpf = input('CPF: ')
+    if cpf in cadastros:
+        print('CPF ja esta cadastrado...')
+        print('Cadastre outro CPF...')
     else:
-        print("Operação inválida, por favor selecione novamente a operação desejada.")
+        nome = input('Nome: ')
+        data_nascimento = input('Data de nascimento: ')
+        logradouro = input('Logradouro: ')
+        numero_casa = input('Numero da Casa: ')
+        bairro = input('Bairro: ')
+        cidade = input('Cidade: ')
+        estado = input('Estado Sigla (ex: SP): ')
+        endereco = f'{logradouro}, {numero_casa} - {bairro} - {cidade}/{estado}'
+        return dict(nome=nome, data_nascimento=data_nascimento, cpf=cpf, endereco=endereco)
+    
+def criar_conta_corrente(numero_anterior):
+    agencia = input('agencia')
+    numero_da_conta = numero_anterior +1
+    numero_agencia = '0001'
+
+def listar_contas():
+    pass
+
+
+# -------------------------- DADOS DO BANCO E VARIAVEIS
+if __name__ == "__main__":
+
+    menu = """
+
+    [d] Depositar
+    [s] Sacar
+    [e] Extrato
+    [q] Sair
+
+    => """
+
+    saldo = 50
+    limite = 500
+    extrato = ""
+    numero_saques = 0
+    LIMITE_SAQUES = 3
+
+
+    # ---------------------------Laco de repeticao que chama as funcoes
+
+    while True:
+
+        opcao = input(menu)
+
+        if opcao == "d":
+            valor = float(input("Informe o valor do depósito: "))
+
+            saldo, extrato = deposito(valor, saldo, extrato)
+
+        elif opcao == "s":
+            valor = float(input("Informe o valor do saque: "))
+
+            saldo, extrato, numero_saques = saque(valor=valor, saldo=saldo, extrato=extrato, numero_saques=numero_saques, limite=limite, LIMITE_SAQUES=LIMITE_SAQUES)
+            
+        elif opcao == "e":
+            func_extrato(saldo, extrato=extrato)
+
+        elif opcao == "q":
+            break
+
+        else:
+            print("Operação inválida, por favor selecione novamente a operação desejada.")
