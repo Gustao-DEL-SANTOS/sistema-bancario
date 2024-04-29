@@ -45,10 +45,12 @@ def func_extrato(saldo, /, *, extrato):
     print("==========================================")
 
 
-
+# Funcoes relacionadas ao usuario
 
 def criar_usuario(*cadastros):
     cpf = input('CPF: ')
+    
+    
     if cpf in cadastros:
         print('CPF ja esta cadastrado...')
         print('Cadastre outro CPF...')
@@ -63,10 +65,11 @@ def criar_usuario(*cadastros):
         endereco = f'{logradouro}, {numero_casa} - {bairro} - {cidade}/{estado}'
         return dict(nome=nome, data_nascimento=data_nascimento, cpf=cpf, endereco=endereco)
     
-def criar_conta_corrente(numero_anterior):
-    agencia = input('agencia')
-    numero_da_conta = numero_anterior +1
+def criar_conta_corrente(numero_conta_anterior):
+    cliente = input('Cpf: ')
+    numero_da_conta = numero_conta_anterior +1
     numero_agencia = '0001'
+    return dict( numero_agencia=numero_agencia, numero_da_conta=numero_da_conta, cliente=cliente)
 
 def listar_contas():
     pass
@@ -90,28 +93,51 @@ if __name__ == "__main__":
     numero_saques = 0
     LIMITE_SAQUES = 3
 
+    numero_de_contas = 0 # numero das contas do banco
+
+    clientes = []
+    contas_corrente = []
 
     # ---------------------------Laco de repeticao que chama as funcoes
+    if False:
+        while True:
 
+            opcao = input(menu)
+
+            if opcao == "d":
+                valor = float(input("Informe o valor do depósito: "))
+
+                saldo, extrato = deposito(valor, saldo, extrato)
+
+            elif opcao == "s":
+                valor = float(input("Informe o valor do saque: "))
+
+                saldo, extrato, numero_saques = saque(valor=valor, saldo=saldo, extrato=extrato, numero_saques=numero_saques, limite=limite, LIMITE_SAQUES=LIMITE_SAQUES)
+                
+            elif opcao == "e":
+                func_extrato(saldo, extrato=extrato)
+
+            elif opcao == "q":
+                break
+
+            else:
+                print("Operação inválida, por favor selecione novamente a operação desejada.")
+    
+    menu_inicial = '''
+
+    [1] - Cadastrar cliente
+    [2] - Criar conta corrente
+    [3] - Sair
+    
+    -> 
+    '''
     while True:
-
-        opcao = input(menu)
-
-        if opcao == "d":
-            valor = float(input("Informe o valor do depósito: "))
-
-            saldo, extrato = deposito(valor, saldo, extrato)
-
-        elif opcao == "s":
-            valor = float(input("Informe o valor do saque: "))
-
-            saldo, extrato, numero_saques = saque(valor=valor, saldo=saldo, extrato=extrato, numero_saques=numero_saques, limite=limite, LIMITE_SAQUES=LIMITE_SAQUES)
-            
-        elif opcao == "e":
-            func_extrato(saldo, extrato=extrato)
-
-        elif opcao == "q":
+        opcoes = input(menu_inicial)
+        if opcoes == '1':
+           clientes.append(criar_usuario(clientes))
+        elif opcoes == '2':
+           contas_corrente.append(criar_conta_corrente(numero_de_contas))
+        elif opcoes == '3':
             break
-
-        else:
-            print("Operação inválida, por favor selecione novamente a operação desejada.")
+    print(f'Clientes -> \n{clientes} \n\n')
+    print(f'contas corrente -> \n{contas_corrente}')
