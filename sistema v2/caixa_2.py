@@ -8,9 +8,10 @@ def menu():
     [3] - Extrato
     [4] - Cadastrar cliente
     [5] - Criar conta corrente
+    [6] - listar contas
     [0] - Sair
-
-'''
+    
+    => '''
     return input(op)
 
 def deposito(valor, saldo, extrato, /):
@@ -77,34 +78,45 @@ def criar_usuario(clientes):
         cidade = input('Cidade: ')
         estado = input('Estado Sigla (ex: SP): ')
         endereco = f'{logradouro}, {numero_casa} - {bairro} - {cidade}/{estado}'
-        cli = dict(nome=nome, data_nascimento=data_nascimento, cpf=cpf, endereco=endereco)
-        clientes.append(cli)
-        print(cli)
+        clientes.append( {'nome':nome, 'data_nascimento': data_nascimento, 'cpf':cpf, 'endereco':endereco})
+        print(clientes)
 
 def filtrar_usuario(cpf, usuarios):
     usuarios_filtrado = [usuario for usuario in usuarios if usuario['cpf'] == cpf]
     return usuarios_filtrado[0] if usuarios_filtrado else None
     
-def criar_conta_corrente(numero_conta_anterior):
-    cliente = input('Cpf: ')
-    numero_da_conta = numero_conta_anterior +1
-    numero_agencia = '0001'
-    return dict( numero_agencia=numero_agencia, numero_da_conta=numero_da_conta, cliente=cliente)
+def criar_conta(AGENCIA, numero_conta, clientes):
+    cpf = input('Informe o Cpf do cliente: ')
+    usuario = filtrar_usuario(cpf, clientes)
+    if usuario:
+        print('=== Conta Criada com sucesso! ===')
+        return dict( agencia=AGENCIA, numero_da_conta=numero_conta, cliente=clientes)
+    print('!!! Usuario nao encontrado, criacao da conta encerrado !!!')
 
-def listar_contas():
-    pass
+def listar_contas(contas_corrente):
+    for contas in contas_corrente:
+        dados = f'''
+Agencia:\t{contas['agencia']}
+C/C:\t{conta['numero_da_conta']}
+Titular:\t{conta['cliente'][0]['nome']}
+'''
+        print('=' * 100)
+        print(dados)
+
+            
+            
 
 
 # -------------------------- DADOS DO BANCO E VARIAVEIS
 if __name__ == "__main__":
 
-    saldo = 50
+    saldo = 0
     limite = 500
     extrato = ""
     numero_saques = 0
     LIMITE_SAQUES = 3
 
-    numero_de_contas = 0 # numero das contas do banco
+    AGENCIA = '0001'
 
     clientes = []
     contas_corrente = []
@@ -129,7 +141,11 @@ if __name__ == "__main__":
         elif opcao == "4":
             criar_usuario(clientes)
         elif opcao == "5":
-            contas_corrente.append(criar_conta_corrente(numero_de_contas))
+            numero_conta = len(contas_corrente) +1
+            conta = criar_conta(AGENCIA,  numero_conta, clientes)
+
+            if conta:
+                contas_corrente.append(conta)
         elif opcao == "6":
             listar_contas(contas_corrente)
 
