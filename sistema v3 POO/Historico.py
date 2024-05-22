@@ -1,4 +1,4 @@
-from time import datetime
+from datetime import datetime
 class Historico:
     def __init__(self):
         self._transacoes = []

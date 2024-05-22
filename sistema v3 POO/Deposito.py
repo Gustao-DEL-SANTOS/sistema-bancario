@@ -1,6 +1,6 @@
 from Transacao import Transacao
 
-class Deposita(Transacao):
+class Deposito(Transacao):
     def __init__(self, valor):
         self._valor = valor
 
