@@ -13,6 +13,10 @@ class Conta:
         return cls(numero, cliente)
     
     @property
+    def cliente(self):
+        return self._cliente
+
+    @property
     def saldo(self):
         return self._saldo
 
@@ -55,8 +59,8 @@ class Conta:
 
 
     def __str__(self):
-         return f'''
+        return f'''
         Agencia:\t{self.agencia}
-        C/C:\t\t{self.numero}
+        C/C:\t{self.numero}
         Titular:\t{self.cliente.nome}
-    '''
+'''

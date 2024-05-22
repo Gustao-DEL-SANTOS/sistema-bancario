@@ -96,11 +96,11 @@ def exibir_extrato(clientes):
         extrato = 'Nao foram realizadas movimentacoes...'
     else:
         for transacao in transacoes:
-            extrato += f'\n{transacao['tipo']} :\n\t R$ {transacao['valor']:.2f}'
+            extrato += f'{transacao['tipo']} :\n\tR$ {transacao['valor']:.2f}'
     
     print(extrato)
     print(f'\nSaldo:\n\t{conta.saldo:.2f}')
-    print('===================================================')
+    print('==================================================')
 
 
 
@@ -147,8 +147,8 @@ def criar_conta(numero_conta, clientes, contas):
 
 def listar_contas(contas):
     for conta in contas:
-        print('=' * 100)
-        print(str(conta))
+        print('=' * 50)
+        print(conta)
 
 
 clientes = []
