@@ -7,7 +7,14 @@ from ContaCorrente import ContaCorrente
 from PessoaFisica import PessoaFisica
 from Transacao import Transacao
 
+from datetime import datetime
 
+def log_transacao(func):
+    def envelope(*args, **kwargs):
+        resultado = func(*args, **kwargs)
+        print(f'{datetime.now()}: {func.__name__.upper()}')
+        return resultado
+    return envelope
 
 def menu():
     op = '''
@@ -25,7 +32,6 @@ def menu():
     return input(op)
 
 
-
 def filtrar_cliente(cpf, clientes):
     clientes_filtrados = [cliente for cliente in clientes if cliente.cpf ==cpf]
     return clientes_filtrados[0] if clientes_filtrados else None
@@ -37,7 +43,7 @@ def recuperar_conta_cliente(cliente):
     return cliente.contas[0]
     
 
-
+@log_transacao
 def depositar(clientes):
     cpf = input('Informe o CPF do cliente: ')
     cliente = filtrar_cliente(cpf, clientes)
@@ -56,7 +62,7 @@ def depositar(clientes):
     cliente.realizar_transacao(conta, transacao)
 
 
-
+@log_transacao
 def sacar(clientes):
     cpf = input('Informe o CPF do cliente: ')
     cliente = filtrar_cliente(cpf, clientes)
@@ -75,7 +81,7 @@ def sacar(clientes):
     cliente.realizar_transacao(conta, transacao)
 
 
-
+@log_transacao
 def exibir_extrato(clientes):
     cpf = input('Informe o CPF do cliente: ')
     cliente = filtrar_cliente(cpf, clientes)
@@ -103,7 +109,7 @@ def exibir_extrato(clientes):
     print('==================================================')
 
 
-
+@log_transacao
 def criar_cliente(clientes):
     cpf = input('Informe o CPF do cliente: ')
     cliente = filtrar_cliente(cpf, clientes)
@@ -128,7 +134,7 @@ def criar_cliente(clientes):
     print('\n=== cliente criado com sucesso! ===')
 
 
-
+@log_transacao
 def criar_conta(numero_conta, clientes, contas):
     cpf = input('Informe o CPF do cliente: ')
     cliente = filtrar_cliente(cpf, clientes)
@@ -142,7 +148,6 @@ def criar_conta(numero_conta, clientes, contas):
     cliente.contas.append(conta)
 
     print('\n=== Conta criada com sucesso! ===')
-
 
 
 def listar_contas(contas):
