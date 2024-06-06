@@ -6,6 +6,7 @@ from Historico import Historico
 from ContaCorrente import ContaCorrente
 from PessoaFisica import PessoaFisica
 from Transacao import Transacao
+from ContasIterador import ContasIterador
 
 from datetime import datetime
 
@@ -95,17 +96,23 @@ def exibir_extrato(clientes):
         return
     
     print('\n==================== EXTRATO ====================')
-    transacoes = conta.historico.transacoes
 
     extrato = ''
-    if not transacoes:
+    tem_transacao = False
+    for transacao in conta.historico.gerar_relatorio(tipo_transacao='saque'):
+        extrato += f'\n{transacao['data']}\n{transacao['tipo']}: \n\tR$ {transacao['valor']:.2f}\n'
+        tem_transacao = True
+
+    for transacao in conta.historico.gerar_relatorio(tipo_transacao='deposito'):
+        extrato += f'\n{transacao['data']}\n{transacao['tipo']}: \n\tR$ {transacao['valor']:.2f}\n'
+        tem_transacao = True
+
+    if not tem_transacao:
         extrato = 'Nao foram realizadas movimentacoes...'
-    else:
-        for transacao in transacoes:
-            extrato += f'\n{transacao['data']}\n{transacao['tipo']} :\n\tR$ {transacao['valor']:.2f}'
+
     
     print(extrato)
-    print(f'\nSaldo:\n\t{conta.saldo:.2f}')
+    print(f'\nSaldo:\n\t{conta.saldo:.2f}\n')
     print('==================================================')
 
 
@@ -151,9 +158,9 @@ def criar_conta(numero_conta, clientes, contas):
 
 
 def listar_contas(contas):
-    for conta in contas:
-        print('=' * 50)
-        print(conta)
+    for conta in ContasIterador(contas):
+        print('=' * 100)
+        print(str(conta))
 
 
 clientes = []
