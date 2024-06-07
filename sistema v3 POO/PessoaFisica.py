@@ -5,3 +5,6 @@ class PessoaFisica(Cliente):
         self.nome = nome
         self.data_nascimento = data_nascimento
         self.cpf = cpf
+
+    def __repr__(self) -> str:
+        return f'<{self.__class__.__name__}: ({self.nome}, {self.cpf})>'

@@ -1,0 +1,8 @@
+[2024-06-07 12:32:07.409357] Funcao CRIAR_CLIENTE executada com argumentos ([<PessoaFisica: (Dado, 123)>, <PessoaFisica: (	hary, 12)>],) e {}. Retornou None 
+
+[2024-06-07 12:32:21.578666] Funcao CRIAR_CLIENTE executada com argumentos ([<PessoaFisica: (Dado, 123)>, <PessoaFisica: (	hary, 12)>, <PessoaFisica: (Guga, 251)>],) e {}. Retornou None 
+
+[2024-06-07 12:33:22.090712] Funcao DEPOSITAR executada com argumentos ([<PessoaFisica: (Dado, 123)>, <PessoaFisica: (	hary, 12)>, <PessoaFisica: (Guga, 251)>],) e {}. Retornou None 
+
+[2024-06-07 12:33:31.068349] Funcao EXIBIR_EXTRATO executada com argumentos ([<PessoaFisica: (Dado, 123)>, <PessoaFisica: (	hary, 12)>, <PessoaFisica: (Guga, 251)>],) e {}. Retornou None 
+

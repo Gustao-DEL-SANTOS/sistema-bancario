@@ -9,11 +9,21 @@ from Transacao import Transacao
 from ContasIterador import ContasIterador
 
 from datetime import datetime
+from pathlib import Path
+
+ROOT_PATH = Path(__file__).parent
 
 def log_transacao(func):
     def envelope(*args, **kwargs):
         resultado = func(*args, **kwargs)
-        print(f'{datetime.now()}: {func.__name__.upper()}')
+        # print(f'{datetime.utcnow()}: {func.__name__.upper()}')
+
+        with open(ROOT_PATH / 'log.txt', 'a', encoding='utf-8') as arquivo:
+            arquivo.write(
+                f'[{datetime.now()}] Funcao {func.__name__.upper()} executada com argumentos {args} e {kwargs}. Retornou {resultado} \n\n'
+            )
+
+
         return resultado
     return envelope
 
