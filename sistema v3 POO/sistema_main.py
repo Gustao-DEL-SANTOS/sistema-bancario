@@ -1,58 +1,53 @@
-from Conta import Conta
-from Cliente import Cliente
-from Deposito import Deposito
-from Saque import Saque
-from Historico import Historico
-from ContaCorrente import ContaCorrente
-from PessoaFisica import PessoaFisica
-from Transacao import Transacao
-from ContasIterador import ContasIterador
-
 from datetime import datetime
 from pathlib import Path
 
+from ContaCorrente import ContaCorrente
+from ContasIterador import ContasIterador
+from Deposito import Deposito
+from PessoaFisica import PessoaFisica
+from Saque import Saque
+
 ROOT_PATH = Path(__file__).parent
+
 
 def log_transacao(func):
     def envelope(*args, **kwargs):
         resultado = func(*args, **kwargs)
         # print(f'{datetime.utcnow()}: {func.__name__.upper()}')
-
         with open(ROOT_PATH / 'log.txt', 'a', encoding='utf-8') as arquivo:
             arquivo.write(
-                f'[{datetime.now()}] Funcao {func.__name__.upper()} executada com argumentos {args} e {kwargs}. Retornou {resultado} \n\n'
+                f'[{datetime.now()}] Funcao {func.__name__.upper()} executada com argumentos {args} e ' +
+                '{kwargs}. Retornou {resultado} \n'
             )
-
 
         return resultado
     return envelope
 
+
 def menu():
-    op = '''
-    =========== MENU =============
-    
+    op = '''=========== MENU =============\n
     [1] - Depositar
     [2] - Sacar
     [3] - Extrato
     [4] - Cadastrar cliente
     [5] - Criar conta corrente
     [6] - listar contas
-    [0] - Sair
-    
+    [0] - Sair\n
     => '''
     return input(op)
 
 
 def filtrar_cliente(cpf, clientes):
-    clientes_filtrados = [cliente for cliente in clientes if cliente.cpf ==cpf]
+    clientes_filtrados = [cliente for cliente in clientes if cliente.cpf == cpf]
     return clientes_filtrados[0] if clientes_filtrados else None
+
 
 def recuperar_conta_cliente(cliente):
     if not cliente.contas:
         print('\n@@@ Cliente nao possui conta ! @@@')
         return
     return cliente.contas[0]
-    
+
 
 @log_transacao
 def depositar(clientes):
@@ -69,7 +64,7 @@ def depositar(clientes):
     conta = recuperar_conta_cliente(cliente)
     if not conta:
         return
-    
+
     cliente.realizar_transacao(conta, transacao)
 
 
@@ -81,14 +76,14 @@ def sacar(clientes):
     if not cliente:
         print('\n@@@ Cliente não encontrado... @@@')
         return
-    
+
     valor = float(input('Informe o valor do saque: '))
     transacao = Saque(valor)
 
     conta = recuperar_conta_cliente(cliente)
     if not conta:
         return
-    
+
     cliente.realizar_transacao(conta, transacao)
 
 
@@ -100,11 +95,11 @@ def exibir_extrato(clientes):
     if not cliente:
         print('\n@@@ Cliente não encontrado... @@@')
         return
-    
+
     conta = recuperar_conta_cliente(cliente)
     if not conta:
         return
-    
+
     print('\n==================== EXTRATO ====================')
 
     extrato = ''
@@ -120,7 +115,6 @@ def exibir_extrato(clientes):
     if not tem_transacao:
         extrato = 'Nao foram realizadas movimentacoes...'
 
-    
     print(extrato)
     print(f'\nSaldo:\n\t{conta.saldo:.2f}\n')
     print('==================================================')
@@ -143,9 +137,7 @@ def criar_cliente(clientes):
     cidade = input('Cidade: ')
     estado = input('Estado Sigla (ex: SP): ')
     endereco = f'{logradouro}, {numero_casa} - {bairro} - {cidade}/{estado}'
-    
     cliente = PessoaFisica(nome=nome, data_nascimento=data_nascimento, cpf=cpf, endereco=endereco)
-
     clientes.append(cliente)
 
     print('\n=== cliente criado com sucesso! ===')
@@ -159,7 +151,7 @@ def criar_conta(numero_conta, clientes, contas):
     if not cliente:
         print('\n@@@ cliente nao encontrado, fluxo de criação encerrado! @@@')
         return
-    
+
     conta = ContaCorrente.nova_conta(cliente=cliente, numero=numero_conta)
     contas.append(conta)
     cliente.contas.append(conta)
@@ -194,7 +186,7 @@ while True:
         criar_cliente(clientes)
 
     elif opcao == "5":
-        numero_conta = len(contas) +1
+        numero_conta = len(contas) + 1
         criar_conta(numero_conta, clientes, contas)
 
     elif opcao == "6":
