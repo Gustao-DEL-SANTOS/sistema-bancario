@@ -17,7 +17,7 @@ def log_transacao(func):
         with open(ROOT_PATH / 'log.txt', 'a', encoding='utf-8') as arquivo:
             arquivo.write(
                 f'[{datetime.now()}] Funcao {func.__name__.upper()} executada com argumentos {args} e ' +
-                '{kwargs}. Retornou {resultado} \n'
+                f'{kwargs}. Retornou {resultado} \n'
             )
 
         return resultado

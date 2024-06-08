@@ -6,3 +6,8 @@
 
 [2024-06-07 12:33:31.068349] Funcao EXIBIR_EXTRATO executada com argumentos ([<PessoaFisica: (Dado, 123)>, <PessoaFisica: (	hary, 12)>, <PessoaFisica: (Guga, 251)>],) e {}. Retornou None 
 
+[2024-06-08 08:33:40.265104] Funcao CRIAR_CLIENTE executada com argumentos ([<PessoaFisica: (ghd, 1)>],) e {kwargs}. Retornou {resultado} 
+[2024-06-08 08:33:56.092516] Funcao CRIAR_CONTA executada com argumentos (1, [<PessoaFisica: (ghd, 1)>], [<ContaCorrente : (0001, 1, ghd)>]) e {kwargs}. Retornou {resultado} 
+[2024-06-08 08:34:02.392464] Funcao DEPOSITAR executada com argumentos ([<PessoaFisica: (ghd, 1)>],) e {kwargs}. Retornou {resultado} 
+[2024-06-08 08:34:08.244557] Funcao SACAR executada com argumentos ([<PessoaFisica: (ghd, 1)>],) e {kwargs}. Retornou {resultado} 
+[2024-06-08 08:34:10.598539] Funcao EXIBIR_EXTRATO executada com argumentos ([<PessoaFisica: (ghd, 1)>],) e {kwargs}. Retornou {resultado} 
